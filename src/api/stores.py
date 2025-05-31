@@ -1,16 +1,18 @@
-# # api collection
-from flask import Blueprint, jsonify, abort, request
-from ..models import db, Store
+'''
+exposes
+/stores
+'''
+
+from flask import Blueprint, jsonify
+from ..models import Store
 
 bp = Blueprint('stores', __name__, url_prefix='/stores')
 
-@bp.route('', methods=['GET']) # decorate path and list of http verbs
+@bp.route('', methods=['GET'])
 def index():
     print('hello stores')
-    # log = ['hello stores']
-    # return jsonify(log)
 
-    data = Store.query.all() # ORM performs select query
+    data = Store.query.all()
 
     result = []
 

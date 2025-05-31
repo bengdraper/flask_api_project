@@ -1,59 +1,67 @@
-# Flask API Service
 
-This directory contains the Flask-based REST API service for the ERP system.
+# Flask API Project ERP
 
-## Overview
-- **Framework:** Flask (with SQLAlchemy, Alembic for migrations)
-- **Purpose:** Provides backend API endpoints for ERP modules (users, companies, stores, etc.)
-- **Database:** PostgreSQL (configured via Docker Compose)
-- **Containerized:** Yes (Docker/Docker Compose)
+## File System Overview
 
-## Directory Structure
 ```
-services/flask_api/
+flask_api_project_erp/
 ├── Dockerfile
+├── docker-compose.yml
 ├── requirements.txt
 ├── wsgi.py
-├── src/
-│   ├── __init__.py
-│   ├── db.py
-│   ├── api/
-│   └── models/
+├── instance/
 ├── migrations/
-└── ...
+└── src/
+    ├── __init__.py
+    ├── db.py
+    ├── api/
+    └── models/
 ```
 
 ## Setup & Usage
 
 ### 1. Prerequisites
 - [Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/)
+- Or: Python 3.10+ and pip (for local development)
 
-### 2. Build & Run (via Docker Compose)
-From the project root (`erp_main/`):
+docker compose build
+docker compose up
+docker compose exec flask_api alembic upgrade head
+
+### 2. Running with Docker Compose (Standalone)
+
+From the project root (`flask_api_project_erp/`):
+
 ```bash
 docker compose build
 docker compose up
 ```
-The Flask API will be available at `http://localhost:<port>` (see `docker-compose.yml`).
 
-### 3. API Endpoints
-- See `src/api/` for available endpoints (e.g., `/users`, `/companies`, etc.)
+- The Flask API will be available at `http://localhost:5001` (see `docker-compose.yml`).
+- The PostgreSQL database will be available at `localhost:5435`.
 
-### 4. Database Migrations
+#### Database Migrations (Docker)
 To run Alembic migrations inside the container:
 ```bash
 docker compose exec flask_api alembic upgrade head
 ```
 
-## Development Notes
+### 3. Running Locally with Python Virtual Environment
 
-- **Local Development (optional):** If running outside Docker, create a virtual environment:
-  ```bash
-  python -m venv .venv
-  source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-  pip install -r requirements.txt
-  ```
-- **Configuration:** Environment variables and config files are managed in `instance/` or via Docker Compose.
+1. Create and activate a virtual environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+2. Set environment variables as needed (see `instance/` or `.env.example`).
+   - You may need to customize database connection strings and Flask settings.
+3. Start a local PostgreSQL database (see `docker-compose.yml` for settings, or use your own).
+4. Run the Flask app:
+   ```bash
+   flask run --host=0.0.0.0 --port=5001
+   ```
 
-## Additional Information
+## API Endpoints
+- See `src/api/` for available endpoints
 

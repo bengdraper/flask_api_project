@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: erpuser
+      POSTGRES_PASSWORD: erppassword
+      POSTGRES_DB: erpdb
+    ports:
+      - "5435:5432"
+    volumes:
+      - pgdata_erp:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U erpuser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  flask_api:
+    build: .
+    command: flask run --host=0.0.0.0 --port=5001
+    environment:
+      FLASK_APP: wsgi.py
+      FLASK_ENV: development
+      DATABASE_URL: postgresql://erpuser:erppassword@db:5432/erpdb
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./src:/app/src
+      - ./migrations:/app/migrations
+      - ./instance:/app/instance
+    depends_on:
+      db:
+        condition: service_healthy
+    working_dir: /app
+
+volumes:
+  pgdata_erp:
