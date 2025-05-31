@@ -8,7 +8,7 @@ alembic migrations at container startup, and several api endpoints to view and a
 ## File System Overview
 
 ```
-flask_api_project_erp/
+flask_api_project/
 ├── Dockerfile
 ├── docker-compose.yml
 ├── requirements.txt
@@ -17,7 +17,6 @@ flask_api_project_erp/
 ├── migrations/
 └── src/
     ├── __init__.py
-    ├── db.py
     ├── api/
     └── models/
 ```
