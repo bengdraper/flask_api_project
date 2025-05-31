@@ -25,10 +25,9 @@ flask_api_project/
 
 ### 1. Prerequisites
 - [Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/)
-- Or: Python 3.10+ and pip (for local development)
 
 docker compose build
-docker compose up
+docker compose up -d
 docker compose exec flask_api alembic upgrade head
 
 ### 2. Running with Docker Compose (Standalone)
@@ -40,8 +39,8 @@ docker compose build
 docker compose up
 ```
 
-- The Flask API will be available at `http://localhost:5001` (see `docker-compose.yml`).
-- The PostgreSQL database will be available at `localhost:5435`.
+- Flask API will be available at `http://localhost:5001` (see `docker-compose.yml`).
+- PostgreSQL database will be available at `localhost:5435`.
 
 #### Database Migrations (Docker)
 To run Alembic migrations inside the container:
@@ -58,7 +57,6 @@ docker compose exec flask_api alembic upgrade head
    pip install -r requirements.txt
    ```
 2. Set environment variables as needed (see `instance/` or `.env.example`).
-   - You may need to customize database connection strings and Flask settings.
 3. Start a local PostgreSQL database (see `docker-compose.yml` for settings, or use your own).
 4. Run the Flask app:
    ```bash
