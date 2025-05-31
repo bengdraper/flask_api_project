@@ -1,5 +1,9 @@
 
-# Flask API Project ERP
+# Flask API Project
+
+This nucamp sql / flask project is the start of a menu and recipe development application.
+The application runs in docker with a postgress database and includes initial data seed via
+alembic migrations at container startup, and several api endpoints to view and add basic data.
 
 ## File System Overview
 
